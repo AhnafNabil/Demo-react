@@ -1,0 +1,27 @@
+name: Notify deps2.dev of new version
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify-deps2dev:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v2
+
+    - name: Read version from version.txt
+      id: read_version
+      run: |
+        VERSION=$(cat version.txt)
+        echo "version=$VERSION" >> $GITHUB_ENV
+
+    - name: Notify deps2.dev of new version
+      run: |
+        curl -X POST "https://api.deps2.dev/newVersion" \
+        -H "Content-Type: application/json" \
+        -d '{"package": "your-package-name", "version": "${{ env.version }}"}'
+
