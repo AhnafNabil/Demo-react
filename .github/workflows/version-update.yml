@@ -21,7 +21,8 @@ jobs:
 
     - name: Notify deps2.dev of new version
       run: |
-        curl -X POST "https://api.deps2.dev/newVersion" \
+        curl -X POST "http://your-public-server-ip-or-domain:8000/newVersion" \
         -H "Content-Type: application/json" \
-        -d '{"package": "your-package-name", "version": "${{ env.version }}"}'
+        -d '{"newVersion": "${{ env.version }}"}'
+
 
